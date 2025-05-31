@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4">Catálogo de Productos</h2>
+  <div id="productos-container" class="row g-4">
+    <!-- Aquí se insertarán los productos dinámicamente -->
+  </div>
+</div>
+
+<!-- Script para cargar los productos -->
+<script src="{% static 'js/productos.js' %}"></script>
+{% endblock %}

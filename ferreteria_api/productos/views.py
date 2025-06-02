@@ -4,12 +4,14 @@ from .serializer import ProductoSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+import random
 from .forms import RegistroForm, LoginForm
+from rest_framework.permissions import AllowAny
+
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-
+    permission_classes = [AllowAny]  # 👈 Permite acceso sin autenticación
 
 def index(request):
     return render(request, 'index.html')
@@ -47,3 +49,8 @@ def login_usuario(request):
 def logout_usuario(request):
     logout(request)
     return redirect('inicio')
+
+def azar(request):
+    productos = list(Producto.objects.all())
+    productos_aleatorios = random.sample(productos, min(len(productos), 4))  # 4 productos máximo
+    return render(request, 'index.html', {'productos_aleatorios': productos_aleatorios})

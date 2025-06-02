@@ -129,3 +129,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ]
 }
+
+SESSION_COOKIE_AGE = 18000

@@ -48,7 +48,12 @@
   <!-- Contenido dinámico -->
   <main class="container py-5">
     {% block content %}
-    <!-- Aquí puedes poner contenido adicional desde otros templates -->
+   <div class="container my-5">
+    <h2 class="text-center mb-4">Catálogo de Productos</h2>
+    <div id="productos-container" class="row g-4">
+      <!-- Aquí se insertarán los productos dinámicamente -->
+    </div>
+  </div>
     {% endblock %}
   </main>
 

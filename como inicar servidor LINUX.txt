@@ -1,0 +1,31 @@
+🔧 PASOS PREVIOS
+Asegúrate de tener Python 3 y pip instalados:
+(Opcional pero recomendado): Descomprime tu proyecto y deja la carpeta (por ejemplo ferremas.zip) en el Escritorio.
+Si no Tiene Python(desde la terminal):
+sudo apt update
+sudo apt install python3 python3-pip -y
+
+🧩 Paso 1: Abrir la terminal
+Presiona Ctrl + Alt + T o busca "Terminal" desde tu menú de aplicaciones.
+
+Paso 2: Ir a la carpeta del proyecto
+Si tu proyecto está descomprimido en el Escritorio:
+cd ~/Escritorio/ferremas
+
+📦 Paso 3: Instalar dependencias del proyecto
+
+pip3 install -r requirements.txt
+
+🗂 Paso 4: Ingresar a la carpeta del proyecto Django
+cd ferreteria_api
+
+
+⚙️ Paso 5: Ejecutar el servidor de desarrollo
+
+python3 manage.py runserver
+
+Verás algo como:
+
+Starting development server at http://127.0.0.1:8000/
+
+y ahi se puede comenzar a probar

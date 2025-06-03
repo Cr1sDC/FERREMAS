@@ -1,0 +1,35 @@
+🔧 PASOS PREVIOS
+Asegúrate de tener Python 3 y pip3 instalados (macOS Ventura y posteriores ya traen Python 3 por defecto):
+
+Si no los tienes o no reconocen el comando, instala Homebrew y luego Python:
+
+(EN EL RESPECTIVO TERMINAL)
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install python
+
+(Recomendado): Descomprime tu carpeta del proyecto (ferremas.zip) en el Escritorio.
+
+🧩 Paso 1: Abrir la Terminal
+Pulsa Cmd + Espacio y escribe “Terminal”, o búscalo desde Launchpad.
+
+📂 Paso 2: Ir a la carpeta del proyecto
+Si descomprimiste el proyecto en el Escritorio:
+cd ~/Desktop/ferremas
+
+📦 Paso 3: Instalar dependencias del proyecto
+
+pip3 install -r requirements.txt
+
+🗂 Paso 4: Entrar a la carpeta del proyecto Django
+
+cd ferreteria_api
+
+⚙️ Paso 5: Ejecutar el servidor de desarrollo	
+
+python3 manage.py runserver
+
+La terminal mostrará:
+Starting development server at http://127.0.0.1:8000/
+
+Y ESTARA LISTO PARA SER PROBADO DESDE LOCALHOST

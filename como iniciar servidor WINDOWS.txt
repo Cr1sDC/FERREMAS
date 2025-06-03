@@ -1,0 +1,11 @@
+PASOS PREVIOS:
+-tener python
+(RECOMENDADO) dejar la carpeta del archivo comprimido en el escritorio
+
+PASO 1: ejecutar cmd
+PASO 2: dirigirse a la carpeta por medio de la cmd (por ej. C:\Users\'Usuario'\Desktop\ferremas)
+PASO 3: ejecutar "pip install -r requirements.txt"
+PASO 3: teclear 'cd ferreteria_api'
+PASO 4: teclear 'python manage.py runserver'
+
+con esto deberia acceder al link localhost otorgado para hacer pruebas

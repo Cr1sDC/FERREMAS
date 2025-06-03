@@ -6,12 +6,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import random
 from .forms import RegistroForm, LoginForm
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny, SAFE_METHODS
 
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-    permission_classes = [AllowAny]  # 👈 Permite acceso sin autenticación
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [AllowAny()]  # Cualquiera puede hacer GET, HEAD, OPTIONS
+        return [IsAdminUser()]  # Solo staff puede POST, PUT, DELETE
 
 def index(request):
     return render(request, 'index.html')

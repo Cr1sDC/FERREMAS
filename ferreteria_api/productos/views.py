@@ -6,27 +6,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import random
 from .forms import RegistroForm, LoginForm
-<<<<<<< HEAD
+
 from rest_framework.permissions import AllowAny,IsAdminUser,SAFE_METHODS
-=======
+
 from rest_framework.permissions import IsAdminUser, AllowAny, SAFE_METHODS
->>>>>>> ea65a880e67969a213f455fc0733cd3af45ce9fb
 
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-<<<<<<< HEAD
     filterset_fields = ['subcategoria']  # Para filtrar desde API
-=======
->>>>>>> ea65a880e67969a213f455fc0733cd3af45ce9fb
+
+
     def get_permissions(self):
         if self.request.method in SAFE_METHODS:
             return [AllowAny()]  # Cualquiera puede hacer GET, HEAD, OPTIONS
         return [IsAdminUser()]  # Solo staff puede POST, PUT, DELETE
-<<<<<<< HEAD
 
-=======
->>>>>>> ea65a880e67969a213f455fc0733cd3af45ce9fb
+
 
 def index(request):
     productos = list(Producto.objects.all())

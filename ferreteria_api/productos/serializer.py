@@ -9,7 +9,7 @@ class ProductoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Producto
-        fields = ['id', 'nombre', 'marca', 'modelo', 'precio', 'stock', 'tipo', 'precio_clp']
+        fields = ['id', 'nombre', 'descripcion', 'precio', 'subcategoria', 'imagen', 'precio_clp']
 
     def get_precio_clp(self, obj):
         tasa = self.get_tasa_usd_to_clp()

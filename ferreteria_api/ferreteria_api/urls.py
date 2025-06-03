@@ -17,11 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from productos.views import index, vista_productos
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('productos.urls')),  
     path('', index, name='inicio'),
     path('productos/', vista_productos, name='productos'),
     path('cuentas/', include('productos.urls')),
+    path('', include('productos.urls')),         # Vistas HTML
+    path('api/', include('productos.api_urls')), # API REST
     
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

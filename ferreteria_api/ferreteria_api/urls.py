@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='inicio'),
     path('productos/', vista_productos, name='productos'),
-    path('cuentas/', include('productos.urls')),
+    path('cuentas/', include('usuarios.urls')),
     path('', include('productos.urls')),         # Vistas HTML
-    path('api/', include('productos.api_urls')), # API REST
+    path('api/', include('ferreteria_api.api_urls')),
     
 ]
 if settings.DEBUG:

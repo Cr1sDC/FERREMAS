@@ -1,0 +1,26 @@
+FROM python:3.11-slim
+
+# Setea el directorio de trabajo
+WORKDIR /app
+
+# Instala dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    libpq-dev gcc python3-dev musl-dev libjpeg-dev zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copia e instala las dependencias de Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el resto del proyecto
+COPY . .
+
+# Recolecta archivos estáticos (si aplica)
+RUN python manage.py collectstatic --noinput || true
+
+# Expón el puerto de gunicorn
+EXPOSE 8000
+
+# Comando para iniciar Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "FERREMAS.wsgi:application"]
+RUN python manage.py migrate

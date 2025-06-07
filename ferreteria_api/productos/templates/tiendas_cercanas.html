@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4">Tiendas Cercanas</h2>
+
+  <form method="get" class="mb-4">
+    <label for="region">Selecciona tu región:</label>
+    <select name="region" id="region" class="form-select" onchange="this.form.submit()">
+      <option value="">-- Selecciona una región --</option>
+      {% for clave, nombre in regiones %}
+        <option value="{{ clave }}" {% if clave == region_seleccionada %}selected{% endif %}>{{ nombre }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% if tiendas %}
+    <h4>Tiendas en {{ region_seleccionada }}:</h4>
+    <ul class="list-group mt-3">
+      {% for tienda in tiendas %}
+        <li class="list-group-item">
+          <strong>{{ tienda.nombre }}</strong><br>
+          {{ tienda.direccion }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% elif region_seleccionada %}
+    <p>No hay tiendas registradas en esta región.</p>
+  {% endif %}
+</div>
+{% endblock %}

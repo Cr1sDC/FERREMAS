@@ -6,49 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FERREMAS - Ferretería</title>
 
+  <!-- Bootstrap & estilos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
- 
-  <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">FERREMAS</a>
+      <a class="navbar-brand" href="{% url 'inicio' %}">FERREMAS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           {% if user.is_authenticated %}
-            <li class="nav-item text-white me-3">Bienvenido, {{ user.username }}</li>
+            <li class="nav-item me-3 text-white">Hola, {{ user.username }}</li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registrarse</a></li>
           {% endif %}
-          <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+
+          <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'productos' %}">Productos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contacto">Tiendas</a></li>
+          <li class="nav-item"><a class="nav-link" href={% url 'tiendas_cercanas' %}>Tiendas</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="{% url 'ver_carrito' %}">
+              🛒 Carrito
+              {% with request.session.carrito.items|length as cantidad %}
+                {% if cantidad > 0 %}
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">
+                    {{ cantidad }}
+                  </span>
+                {% endif %}
+              {% endwith %}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="bg-primary text-white text-center py-5">
+  <!-- Encabezado genérico (puedes quitar si solo lo usas en index) -->
+  <header class="bg-primary text-white text-center py-4">
     <div class="container">
-      <h1>Bienvenidos a FERREMAS</h1>
-      <p class="lead">Tu ferretería de confianza para todos tus proyectos</p>
+      <h1>FERREMAS</h1>
+      <p class="lead">Tu ferretería de confianza</p>
     </div>
   </header>
 
   <!-- Contenido dinámico -->
   <main class="container py-5">
     {% block content %}
-    <!-- Aquí puedes poner contenido adicional desde otros templates -->
     {% endblock %}
   </main>
 
@@ -59,7 +72,7 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS Bundle -->
+  <!-- JS de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

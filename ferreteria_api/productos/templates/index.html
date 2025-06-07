@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FERREMAS - Ferretería</title>
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
@@ -14,38 +13,57 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">FERREMAS</a>
+      <a class="navbar-brand" href="{% url 'inicio' %}">FERREMAS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           {% if user.is_authenticated %}
-            <li class="nav-item text-white me-3">Bienvenido, {{ user.username }}</li>
+            <li class="nav-item me-3 text-white">Hola, {{ user.username }}</li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registrarse</a></li>
           {% endif %}
-          <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'productos' %}">Productos</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Tiendas</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ver_carrito' %}">
+              🛒 Carrito
+              {% with request.session.carrito.items|length as cantidad %}
+                {% if cantidad > 0 %}
+                  <span class="badge bg-light text-dark">{{ cantidad }}</span>
+                {% endif %}
+              {% endwith %}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Header -->
+  <!-- Header dinámico -->
   <header class="bg-primary text-white text-center py-5">
     <div class="container">
-      <h1>Bienvenidos a FERREMAS</h1>
-      <p class="lead">Tu ferretería de confianza para todos tus proyectos</p>
+      {% if user.is_authenticated %}
+        <h1>Bienvenido, {{ user.username }} 👋</h1>
+        {% if user.is_superuser %}
+          <p class="lead">Has iniciado sesión como administrador.</p>
+        {% else %}
+          <p class="lead">Gracias por visitarnos. Explora nuestros productos.</p>
+        {% endif %}
+      {% else %}
+        <h1>Bienvenido a FERREMAS</h1>
+        <p class="lead">Tu ferretería de confianza para todos tus proyectos</p>
+      {% endif %}
     </div>
   </header>
 
-  <!-- Contenido principal -->
+  <!-- Contenido dinámico -->
   <main class="container my-5">
-
     <h2 class="text-center mb-4">Catálogo de Productos</h2>
 
     <!-- Filtro por subcategoría -->
@@ -72,12 +90,16 @@
     <div id="productos-container" class="row g-4">
       {% for producto in productos %}
         <div class="col-md-4">
-          <div class="card h-100">
+          <div class="card h-100 shadow-sm">
             {% if producto.imagen %}
               <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
             {% endif %}
             <div class="card-body">
-              <h5 class="card-title">{{ producto.nombre }}</h5>
+              <h5 class="card-title">
+                <a href="{% url 'detalle_producto' producto.id %}" class="text-decoration-none">
+                  {{ producto.nombre }}
+                </a>
+              </h5>
               <p class="card-text">{{ producto.descripcion|truncatewords:15 }}</p>
               <p class="card-text"><strong>${{ producto.precio }}</strong></p>
             </div>
@@ -87,7 +109,6 @@
         <p class="text-center">No hay productos disponibles.</p>
       {% endfor %}
     </div>
-
   </main>
 
   <!-- Footer -->

@@ -11,6 +11,10 @@
       <h2>{{ producto.nombre }}</h2>
       <p>{{ producto.descripcion }}</p>
       <p><strong>Precio: ${{ producto.precio }}</strong></p>
+      <p>Stock disponible: {{ producto.stock }}</p>
+      {% if error %}
+       <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
 
       <form method="post">
         {% csrf_token %}

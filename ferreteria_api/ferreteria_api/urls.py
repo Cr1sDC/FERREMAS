@@ -26,7 +26,7 @@ urlpatterns = [
     path('cuentas/', include('usuarios.urls')),
     path('', include('productos.urls')),         # Vistas HTML
     path('api/', include('ferreteria_api.api_urls')),
-    
+    path('usuarios/', include('usuarios.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

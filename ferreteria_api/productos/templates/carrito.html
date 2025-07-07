@@ -21,7 +21,6 @@
           <td>${{ item.producto.precio }}</td>
           <td>{{ item.cantidad }}</td>
           <td>${{ item.subtotal }}</td>
-        
         <td>
       <form method="post" action="{% url 'eliminar_del_carrito' item.producto.id %}">
         {% csrf_token %}
@@ -33,6 +32,9 @@
       </tbody>
     </table>
     <h4 class="text-end">Total: ${{ total }}</h4>
+    <p><strong>Subtotal:</strong> ${{ subtotal }}</p>
+    <p><strong>IVA (19%):</strong> ${{ iva }}</p>
+    <p><strong>Total:</strong> ${{ total }}</p>
 
     <div class="d-flex justify-content-between mt-4">
       <a href="{% url 'productos' %}" class="btn btn-secondary">← Volver a productos</a>

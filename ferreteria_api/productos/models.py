@@ -19,12 +19,13 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, related_name='productos')
-    imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
+    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
+    subcategoria = models.ForeignKey('Subcategoria', on_delete=models.CASCADE)
+    stock = models.PositiveIntegerField(default=0)
+    activo = models.BooleanField(default=True)  # ← nuevo campo para soft delete
 
     def __str__(self):
         return self.nombre
-    
 REGIONES = [
     ("Arica y Parinacota", "Arica y Parinacota"),
     ("Tarapacá", "Tarapacá"),

@@ -27,3 +27,25 @@ class RegistroForm(forms.ModelForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Nombre de usuario')
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+
+class CrearUsuarioAdminForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput, label='Contraseña')
+    confirmar_password = forms.CharField(widget=forms.PasswordInput, label='Confirmar contraseña')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password', 'confirmar_password', 'is_staff', 'is_superuser']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirmar = cleaned_data.get("confirmar_password")
+        if password != confirmar:
+            raise forms.ValidationError("Las contraseñas no coinciden.")
+        return cleaned_data
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Este correo ya está registrado.')
+        return email
